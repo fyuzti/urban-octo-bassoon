@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный блог</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a href="#home">Главная</a></li>
+      <li><a href="#about">О себе</a></li>
+      <li><a href="#news">Новости</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section id="home">
+    <h1>Добро пожаловать в мой блог!</h1>
+    <p>Здесь вы найдете все мои мысли и идеи.</p>
+  </section>
+  <section id="about">
+    <h2>О себе</h2>
+    <p>Меня зовут Дианов Максим, и я увлекаюсь веб-разработкой.</p>
+    <p>Для предложений новостей и связи со мной заполните форму.</p>
+  </section>
+  <section id="news">
+    <h2>Новости</h2>
+
+    <!-- Форма добавления новостей -->
+    <div class="add-news">
+      <h3>Добавить новость</h3>
+      <form id="addNewsForm" enctype="multipart/form-data">
+        <label for="newsTitle">Заголовок:</label>
+        <input type="text" id="newsTitle" name="newsTitle" required>
+
+        <label for="newsContent">Содержание:</label>
+        <textarea id="newsContent" name="newsContent" required></textarea>
+
+        <label for="newsImage">Изображение:</label>
+        <input type="file" id="newsImage" name="newsImage" accept="image/*" required>
+
+        <button type="submit">Добавить новость</button>
+      </form>
+    </div>
+  </section>
+  <section id="contact">
+    <h2>Контакты</h2>
+    <form>
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Сообщение:</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+  </section>
+</main>
+<footer>
+  <p>&copy; Дианов Максим</p>
+</footer>
+
+<script>
+  document.getElementById('addNewsForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const title = document.getElementById('newsTitle').value;
+    const content = document.getElementById('newsContent').value;
+    const image = document.getElementById('newsImage').files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      const newsSection = document.getElementById('news');
+      const newNewsItem = document.createElement('div');
+      newNewsItem.classList.add('news-item');
+
+      const newsImage = document.createElement('img');
+      newsImage.src = reader.result;
+      newsImage.alt = title;
+
+      const newsTitle = document.createElement('h3');
+      newsTitle.textContent = title;
+
+      const newsContent = document.createElement('p');
+      newsContent.textContent = content;
+
+      newNewsItem.appendChild(newsImage);
+      newNewsItem.appendChild(newsTitle);
+      newNewsItem.appendChild(newsContent);
+
+      newsSection.appendChild(newNewsItem);
+    }
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  });
+</script>
+</body>
+</html>
